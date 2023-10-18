@@ -3,7 +3,7 @@
     public class OrderService
     {
 
-        CustomerrService userLogic;
+        CustomerService userLogic;
         userDTO UserDto;
     }
 

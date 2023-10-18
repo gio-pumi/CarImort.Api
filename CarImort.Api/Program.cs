@@ -1,3 +1,4 @@
+using CarImport.Core.Services;
 using CarImport.Domain;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,6 +21,9 @@ namespace CarImort.Api
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
+
+
+
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

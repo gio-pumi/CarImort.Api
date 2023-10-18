@@ -9,10 +9,7 @@ namespace CarImport.Domain.DbEntities
 {
     public class Car
     {
-        [Required(ErrorMessage = "Missing Type Id")]
         public int TypeId { get; set; }
-
-        public CarManufacturer Manufacturer { get; set; }
 
         public string ModelName { get; set; }
 
@@ -20,7 +17,6 @@ namespace CarImport.Domain.DbEntities
 
         public string VINCode { get; set; }
 
-        [Required(ErrorMessage = "Missing Image")]
         public string Image { get; set; }
 
     }

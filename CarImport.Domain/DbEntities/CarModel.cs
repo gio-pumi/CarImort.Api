@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace CarImport.Domain.DbEntities
 {
-    public enum carModel
+    internal class CarModel
     {
-
-
+        public int ID { get; set; }
+        public int Name { get; set; }
     }
 }

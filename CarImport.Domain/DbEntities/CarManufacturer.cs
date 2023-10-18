@@ -1,10 +1,14 @@
-﻿namespace CarImport.Domain.DbEntities
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CarImport.Domain.DbEntities
 {
-    public enum CarManufacturer
+    internal class CarManufacturer
     {
-        Volvo,
-        BMW,
-        Mercedes,
-        VW
+        public int ID { get; set; }
+        public int Name { get; set; }
     }
 }

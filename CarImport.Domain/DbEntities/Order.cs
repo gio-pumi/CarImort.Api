@@ -1,4 +1,5 @@
 ﻿using CarImport.Infrastructure.Helper;
+using System.Collections.Generic;
 
 namespace CarImport.Domain.DbEntities
 {
@@ -6,9 +7,7 @@ namespace CarImport.Domain.DbEntities
     {
         public int ID { get; set; }
 
-        public CarManufacturer Manufacturer { get; set; }
-
-        public string OrderName { get; set; }
+        public Customer Customer { get; set; }
 
         public Status Status { get; set; }
 
