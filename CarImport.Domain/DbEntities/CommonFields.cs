@@ -10,10 +10,10 @@ namespace CarImport.Domain.DbEntities
     {
         public DateTime CreateDate { get; set; } = DateTime.Now;
 
-        public string ModifierUser { get; set; } = "Gio PUMI";
+        public string ModifierUser { get; set; } = "Gio Pumi";
 
 
-        public string LastModifierUser { get; set; } = "Gio pumi";
+        public string LastModifierUser { get; set; } = "Gio Pumi";
     }
 }
 
