@@ -1,14 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CarImport.Domain.DbEntities
 {
-    internal class CarModel
+    public class CarModel
     {
-        public int ID { get; set; }
-        public int Name { get; set; }
+        public int CarModelId { get; set; }
+        public string Name { get; set; }
+        public int CarManufacturerId { get; set; }
+        [ForeignKey("CarManufacturerId")]
+        public CarManufacturer CarManufacturer { get; set; }
+
+        public List<Car> Cars { get; set; }
     }
 }

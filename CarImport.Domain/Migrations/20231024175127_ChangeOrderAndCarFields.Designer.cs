@@ -4,6 +4,7 @@ using CarImport.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarImport.Domain.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231024175127_ChangeOrderAndCarFields")]
+    partial class ChangeOrderAndCarFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,6 +49,9 @@ namespace CarImport.Domain.Migrations
                     b.Property<int>("ModelId")
                         .HasColumnType("int");
 
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
                     b.Property<string>("VINCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -53,6 +59,9 @@ namespace CarImport.Domain.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ModelId");
+
+                    b.HasIndex("OrderId")
+                        .IsUnique();
 
                     b.ToTable("Cars");
                 });
@@ -129,9 +138,9 @@ namespace CarImport.Domain.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PersonalNumber")
-                        .HasMaxLength(11)
-                        .HasColumnType("int");
+                    b.Property<string>("PersonalNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -174,8 +183,6 @@ namespace CarImport.Domain.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CarId");
 
                     b.HasIndex("CustomerId");
 
@@ -253,7 +260,15 @@ namespace CarImport.Domain.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("CarImport.Domain.DbEntities.Order", "Order")
+                        .WithOne("Car")
+                        .HasForeignKey("CarImport.Domain.DbEntities.Car", "OrderId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("CarModel");
+
+                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("CarImport.Domain.DbEntities.CarModel", b =>
@@ -269,19 +284,11 @@ namespace CarImport.Domain.Migrations
 
             modelBuilder.Entity("CarImport.Domain.DbEntities.Order", b =>
                 {
-                    b.HasOne("CarImport.Domain.DbEntities.Car", "Car")
-                        .WithMany()
-                        .HasForeignKey("CarId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("CarImport.Domain.DbEntities.Customer", "Customer")
                         .WithMany("Orders")
                         .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Car");
 
                     b.Navigation("Customer");
                 });
@@ -314,6 +321,12 @@ namespace CarImport.Domain.Migrations
             modelBuilder.Entity("CarImport.Domain.DbEntities.Customer", b =>
                 {
                     b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("CarImport.Domain.DbEntities.Order", b =>
+                {
+                    b.Navigation("Car")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

@@ -1,4 +1,5 @@
-﻿using CarImport.Core.Models;
+﻿using CarImport.Core.Interfaces;
+using CarImport.Core.Models.Customer;
 using CarImport.Domain;
 using CarImport.Domain.DbEntities;
 using Microsoft.EntityFrameworkCore;
@@ -12,38 +13,88 @@ using System.Threading.Tasks;
 
 namespace CarImport.Core.Services
 {
-    public class CustomerService
+    public class CustomerService : ICustomerService
     {
 
-        private readonly ApplicationDbContext DB;
+        private readonly ApplicationDbContext _db;
 
         public CustomerService(ApplicationDbContext context)
         {
-            DB = context;
+            _db = context;
         }
 
 
 
-        //Add user from DB
-        public void addCustomer()
+        // Add Customer to db
+        public async Task<List<Customer>> AddCustomer(CustomerDTO customerDTO)
         {
-            Customer customerToAdd = new Customer
+
+            var customer = new Customer()
             {
-                CusomerID = "12fgdfgf",
-                Name = "pumi",
-                LastName = "Jasahi",
-                BirthDate =  new DateTime(1992, 11, 13)
-
-                //CusomerID = customerDTO.CustomerID,
-                //Name = customerDTO.Name,
-                //LastName = customerDTO.LastName,
-                //BirthDate = customerDTO.BirthDate,
-
+                PersonalNumber = customerDTO.PersonalNumber,
+                Name = customerDTO.Name,
+                LastName = customerDTO.LastName,
+                BirthDate = customerDTO.BirthDate
             };
 
-            DB.Customers.Add(customerToAdd);
-            DB.SaveChanges();
+            await _db.Customers.AddAsync(customer);
+            await _db.SaveChangesAsync();
+
+            var customers = await _db.Customers.ToListAsync();
+
+
+            return customers;
         }
+
+        // Update Customer 
+        public async Task<List<Customer>> UpdateCustomer(CustomerUpdateDTO customerDTO)
+        {
+            var customer = await _db.Customers.FirstOrDefaultAsync(c => c.Id == customerDTO.Id);
+
+            customer.PersonalNumber = customerDTO.PersonalNumber;
+            customer.Name = customerDTO.Name;
+            customer.LastName = customerDTO.LastName;
+            customer.BirthDate = customerDTO.BirthDate;
+            customer.CreateDate = DateTime.Now;
+            customer.ModifierUser = "Gior PUMI4";
+            customer.LastModifyDate = DateTime.Now;
+            customer.LastModifierUser = "Gio pumi4";
+
+
+            _db.Update(customer);
+            await _db.SaveChangesAsync();
+
+            var customers = await _db.Customers.ToListAsync();
+            return customers;
+        }
+
+        //Delete Customer
+        public async Task<List<Customer>> DeleteCustomer(int Id)
+        {
+            var customer = await _db.Customers.FirstOrDefaultAsync(c => c.Id == Id);
+
+            _db.Customers.Remove(customer);
+            await _db.SaveChangesAsync();
+            var customers = await _db.Customers.ToListAsync();
+            return customers;
+        }
+
+        //Get CustomerById
+        public async Task<Customer> GetCustomerByID(int Id)
+        {
+
+            var customer = await _db.Customers.FirstOrDefaultAsync(c => c.Id == Id);
+
+            return customer;
+        }
+
+        //Get AllCustomers
+        public async Task<List<Customer>> GetAllCustomers()
+        {
+            return await _db.Customers.ToListAsync();
+
+        }
+
 
     }
 }

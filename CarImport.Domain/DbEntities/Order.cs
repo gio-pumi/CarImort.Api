@@ -1,19 +1,23 @@
-﻿using CarImport.Infrastructure.Helper;
+﻿using CarImport.Infrastructure.Enumerations;
+using CarImport.Infrastructure.Helper;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CarImport.Domain.DbEntities
 {
-    public class Order:CommonFields
+    public class Order : CommonFields
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
 
+        public int CarId { get; set; }
+        [ForeignKey("CarId")]
+        public Car Car { get; set; }
+
+        public int CustomerId { get; set; }
+        [ForeignKey("CustomerId")]
         public Customer Customer { get; set; }
 
         public Status Status { get; set; }
-
-        public decimal CarCost { get; set; }
-
-        public string Currecy { get; set; }
 
         public string Details { get; set; }
 

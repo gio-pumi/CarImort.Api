@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace CarImport.Domain.DbEntities
 {
-    public class CarManufacturer
+    public class Role
     {
-        public int Id { get; set; }
-
-        public string Name { get; set; }
-       
-        public List<CarModel> CarModels { get; set; }
+        public int RoleId { get; set; }
+        public string RoleName { get; set; }
+        public  List<User> Users { get; set; }
     }
 }

@@ -1,9 +1,8 @@
-﻿namespace CarImport.Core.Models
+﻿namespace CarImport.Core.Models.Customer
 {
-    public class customerDTO
+    public class CustomerDTO
     {
-        public int ID { get; set; }
-        public string CustomerID { get; set; }
+        public int PersonalNumber { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }
         public DateTime BirthDate { get; set; }

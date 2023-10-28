@@ -4,14 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarImport.Domain.DbEntities
+namespace CarImport.Core.Models.Search
 {
-    public class CarManufacturer
+    public  class SearchCustomerDTO 
     {
-        public int Id { get; set; }
-
+        public int PersonalNumber { get; set; }
         public string Name { get; set; }
-       
-        public List<CarModel> CarModels { get; set; }
+        public string LastName { get; set; }
     }
 }
