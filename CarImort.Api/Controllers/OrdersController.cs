@@ -10,19 +10,18 @@ using Newtonsoft.Json;
 
 namespace CarImort.Api.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class OrdersController : ControllerBase
     {
         private readonly IOrderService _orderService;
-        //private readonly GetCurrenciesController _currentCurrencies;
+        private readonly GetCurrenciesController _currentCurrencies;
 
-        public OrdersController(IOrderService orderService)
+        public OrdersController(IOrderService orderService, GetCurrenciesController currentCurrencies)
         {
             _orderService = orderService;
-           // _currentCurrencies = currentCurrencies;
-
+            _currentCurrencies = currentCurrencies;
         }
 
         [HttpPost]
@@ -51,15 +50,16 @@ namespace CarImort.Api.Controllers
         }
 
         [HttpGet]
-        [Route("{orderId}")]
+        [Route("{Id}")]
         public async Task<Order> GetOrderByID(int Id)
 
         {
-        //    var returnedCurrencies = _currentCurrencies.GetCurrencies().ToString();
 
-        //    var convertedCurrencies = JsonConvert.DeserializeObject<Currency>(returnedCurrencies);
+            var returnedCurrencies = _currentCurrencies.GetCurrencies().ToString();
 
-        //    var finalCurreny = "";
+          var convertedCurrencies = JsonConvert.DeserializeObject<Currency>(returnedCurrencies);
+
+          var finalCurreny = "";
 
         //    foreach (var currency in convertedCurrencies)
         //    {

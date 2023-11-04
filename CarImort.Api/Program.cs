@@ -1,3 +1,4 @@
+using CarImort.Api.Controllers;
 using CarImport.Core;
 using CarImport.Core.Interfaces;
 using CarImport.Core.Services;
@@ -45,6 +46,7 @@ namespace CarImort.Api
             builder.Services.AddScoped<IAuthorizeService, AuthorizeService>();
             builder.Services.AddScoped<ISearchCustomerService, SearchCustomerService>();
             builder.Services.AddHttpContextAccessor();
+            builder.Services.AddScoped<GetCurrenciesController>();
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             options.TokenValidationParameters = new TokenValidationParameters

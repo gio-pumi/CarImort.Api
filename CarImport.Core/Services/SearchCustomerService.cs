@@ -20,7 +20,6 @@ namespace CarImport.Core.Services
             _db = applicationDbContext;
         }
 
-
         public async Task<List<Customer>> GetCustomers (SearchCustomerDTO searchCustomerDTO)
         {
             IQueryable<Customer> query = _db.Customers;
