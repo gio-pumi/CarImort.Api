@@ -9,13 +9,12 @@ namespace CarImort.Api.Controllers
     public class GetCurrenciesController : ControllerBase
     {
         [HttpGet]
-
-        public  IActionResult GetCurrencies()
+        public IActionResult GetCurrencies()
         {
-
-            try {
+            try
+            {
                 HttpClient client = new HttpClient();
-
+                
                 client.BaseAddress = new Uri("https://api.freecurrencyapi.com/");
                 client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -23,7 +22,6 @@ namespace CarImort.Api.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
-
                     return Ok(response.Content.ReadAsStringAsync().Result);
                 }
                 else
@@ -31,8 +29,9 @@ namespace CarImort.Api.Controllers
                     return BadRequest("Some thing went wrong in the request");
                 }
             }
-            catch (Exception ex) { return Ok(ex.Message); }
+            catch (Exception ex) {
+                return Ok(ex.Message); }
             finally { }
-            }
+        }
     }
 }

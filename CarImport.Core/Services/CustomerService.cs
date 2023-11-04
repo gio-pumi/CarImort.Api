@@ -1,14 +1,10 @@
-﻿using CarImport.Core.Interfaces;
+﻿using AutoMapper;
+using CarImport.Core.Interfaces;
 using CarImport.Core.Models.Customer;
 using CarImport.Domain;
 using CarImport.Domain.DbEntities;
+using CarImport.Infrastructure.Helpers;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 
 namespace CarImport.Core.Services
@@ -17,10 +13,13 @@ namespace CarImport.Core.Services
     {
 
         private readonly ApplicationDbContext _db;
+        private readonly IMapper _mapper;
 
-        public CustomerService(ApplicationDbContext context)
+        public CustomerService(ApplicationDbContext context, IMapper mapper)
         {
             _db = context;
+            _mapper = mapper;
+
         }
 
 
@@ -28,21 +27,13 @@ namespace CarImport.Core.Services
         // Add Customer to db
         public async Task<List<Customer>> AddCustomer(CustomerDTO customerDTO)
         {
-
-            var customer = new Customer()
-            {
-                PersonalNumber = customerDTO.PersonalNumber,
-                Name = customerDTO.Name,
-                LastName = customerDTO.LastName,
-                BirthDate = customerDTO.BirthDate
-            };
-
+            var customer = _mapper.Map<Customer>(customerDTO);
+            customer.CreateDate = DateTime.Now;
+            customer.RegisterByUser = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+            customer.LastModifierUser = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
             await _db.Customers.AddAsync(customer);
             await _db.SaveChangesAsync();
-
             var customers = await _db.Customers.ToListAsync();
-
-
             return customers;
         }
 
@@ -55,11 +46,8 @@ namespace CarImport.Core.Services
             customer.Name = customerDTO.Name;
             customer.LastName = customerDTO.LastName;
             customer.BirthDate = customerDTO.BirthDate;
-            customer.CreateDate = DateTime.Now;
-            customer.ModifierUser = "Gior PUMI4";
             customer.LastModifyDate = DateTime.Now;
-            customer.LastModifierUser = "Gio pumi4";
-
+            customer.LastModifierUser = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
 
             _db.Update(customer);
             await _db.SaveChangesAsync();
@@ -91,10 +79,36 @@ namespace CarImport.Core.Services
         //Get AllCustomers
         public async Task<List<Customer>> GetAllCustomers()
         {
+
             return await _db.Customers.ToListAsync();
 
         }
 
+        public async Task<PaginatedData<Customer>> GetCustomers(int pageIndex, int pageSize, bool? isAsc)
+        {
+            var query = _db.Customers.AsQueryable();
 
+            if (isAsc != null)
+            {
+                if (isAsc.Value)
+                {
+                    query = query.OrderBy(c => c.Name);
+                }
+                else
+                {
+                    query = query.OrderByDescending(c => c.Name);
+                }
+            }
+            var totalItems = await _db.Customers.CountAsync();
+            var customers = await query.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
+            return new PaginatedData<Customer>
+            {
+                TotalItems = totalItems,
+                PageIndex = pageIndex,
+                PageSize = pageSize,
+                Items = customers
+            };
+        }
     }
 }
+

@@ -8,12 +8,15 @@ namespace CarImport.Domain.DbEntities
 {
     public class CommonFields
     {
-        public DateTime CreateDate { get; set; } = DateTime.Now;
+        public int Id { get; set; }
 
-        public string ModifierUser { get; set; } = "Gio Pumi";
+        public DateTime CreateDate { get; set; }
 
+        public string RegisterByUser { get; set; } 
 
-        public string LastModifierUser { get; set; } = "Gio Pumi";
+        public DateTime LastModifyDate { get; set; }
+
+        public string LastModifierUser { get; set; } 
     }
 }
 

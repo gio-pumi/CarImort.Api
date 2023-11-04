@@ -76,20 +76,23 @@ namespace CarImport.Domain.Migrations
 
             modelBuilder.Entity("CarImport.Domain.DbEntities.CarModel", b =>
                 {
-                    b.Property<int>("CarModelId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CarModelId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CarManufacturerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CarModelId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("CarModelId");
+                    b.HasKey("Id");
 
                     b.HasIndex("CarManufacturerId");
 
@@ -121,10 +124,6 @@ namespace CarImport.Domain.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ModifierUser")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -132,6 +131,10 @@ namespace CarImport.Domain.Migrations
                     b.Property<int>("PersonalNumber")
                         .HasMaxLength(11)
                         .HasColumnType("int");
+
+                    b.Property<string>("RegisterByUser")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -166,7 +169,7 @@ namespace CarImport.Domain.Migrations
                     b.Property<DateTime>("LastModifyDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("ModifierUser")
+                    b.Property<string>("RegisterByUser")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

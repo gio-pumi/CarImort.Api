@@ -1,5 +1,6 @@
 ﻿using CarImport.Core.Models.Order;
 using CarImport.Domain.DbEntities;
+using CarImport.Infrastructure.Enumerations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,9 @@ namespace CarImport.Core.Interfaces
         Task<List<Order>> AddOrder(OrderDTO orderDTO);
         Task<List<Order>> UpdateOrder(OrderUpdateDTO orderDTO);
         Task<List<Order>> DeleteOrder(int Id);
-        Task<Order> GetOrderByID(int Id);
+        Task<Order> GetOrderById(int Id);
+
+     //   Task<Currencies> GetCurrency(Currencies currency);
         Task<List<Order>> GetAllOrders();
     }
 }

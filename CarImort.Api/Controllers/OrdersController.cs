@@ -1,9 +1,12 @@
 ﻿using CarImport.Core.Interfaces;
 using CarImport.Core.Models.Order;
 using CarImport.Domain.DbEntities;
+using CarImport.Infrastructure.Enumerations;
+using CarImport.Infrastructure.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace CarImort.Api.Controllers
 {
@@ -13,15 +16,17 @@ namespace CarImort.Api.Controllers
     public class OrdersController : ControllerBase
     {
         private readonly IOrderService _orderService;
+        //private readonly GetCurrenciesController _currentCurrencies;
 
         public OrdersController(IOrderService orderService)
         {
             _orderService = orderService;
+           // _currentCurrencies = currentCurrencies;
+
         }
 
         [HttpPost]
         [Route("")]
-       // [Authorize(Roles ="Admin")]
         public async Task<List<Order>> AddOrder(OrderDTO orderDTO)
         {
             var result = await _orderService.AddOrder(orderDTO);
@@ -48,21 +53,40 @@ namespace CarImort.Api.Controllers
         [HttpGet]
         [Route("{orderId}")]
         public async Task<Order> GetOrderByID(int Id)
-        {
-            var result = await _orderService.GetOrderByID(Id);
 
-            return result;
+        {
+        //    var returnedCurrencies = _currentCurrencies.GetCurrencies().ToString();
+
+        //    var convertedCurrencies = JsonConvert.DeserializeObject<Currency>(returnedCurrencies);
+
+        //    var finalCurreny = "";
+
+        //    foreach (var currency in convertedCurrencies)
+        //    {
+
+        //        if (currency.ToString().Contains(currencyForConvert.ToString())) { }
+        //        finalCurreny = currency;
+        //    }
+        //}
+
+
+
+                var result = await _orderService.GetOrderById(Id);
+                return result;
+            
+
+            //var z = new OrderDTO();
+            //return z;
         }
 
-        [HttpGet]
-        [Route("")]
-      //  [Authorize(Roles="User")]
-        public async Task<List<Order>> GetAllOrders()
-        {
-            var result = await _orderService.GetAllOrders();
+    [HttpGet]
+    [Route("")]
+    public async Task<List<Order>> GetAllOrders()
+    {
+        var result = await _orderService.GetAllOrders();
 
-            return result;
-        }
-
+        return result;
     }
+
+}
 }

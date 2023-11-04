@@ -1,5 +1,6 @@
 ﻿using CarImport.Core.Models.Customer;
 using CarImport.Domain.DbEntities;
+using CarImport.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +16,6 @@ namespace CarImport.Core.Interfaces
         Task<List<Customer>> DeleteCustomer(int Id);
         Task<Customer> GetCustomerByID(int Id);
         Task<List<Customer>> GetAllCustomers();
+        Task<PaginatedData<Customer>> GetCustomers(int pageIndex, int pageSize,bool? sort);
     }
 }

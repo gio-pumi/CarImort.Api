@@ -11,7 +11,10 @@ namespace CarImport.Core.Models.Order
         public Status Status { get; set; }
 
         public int CarId { get; set; }
+
         public string Details { get; set; }
+
+        public int currency { get; set; }
 
     }
 }

@@ -13,6 +13,7 @@ namespace CarImort.Api.Controllers
     public class AuthorizeController : ControllerBase
     {
         private readonly IAuthorizeService _authorizeService;
+        private readonly IHttpContextAccessor _contextAccessor;
 
         public AuthorizeController(IAuthorizeService authorizeService)
         {

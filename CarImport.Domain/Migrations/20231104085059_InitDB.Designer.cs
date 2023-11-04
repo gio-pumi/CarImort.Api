@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarImport.Domain.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231024175127_ChangeOrderAndCarFields")]
-    partial class ChangeOrderAndCarFields
+    [Migration("20231104085059_InitDB")]
+    partial class InitDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,9 +49,6 @@ namespace CarImport.Domain.Migrations
                     b.Property<int>("ModelId")
                         .HasColumnType("int");
 
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
                     b.Property<string>("VINCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -59,9 +56,6 @@ namespace CarImport.Domain.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ModelId");
-
-                    b.HasIndex("OrderId")
-                        .IsUnique();
 
                     b.ToTable("Cars");
                 });
@@ -85,20 +79,23 @@ namespace CarImport.Domain.Migrations
 
             modelBuilder.Entity("CarImport.Domain.DbEntities.CarModel", b =>
                 {
-                    b.Property<int>("CarModelId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CarModelId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CarManufacturerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CarModelId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("CarModelId");
+                    b.HasKey("Id");
 
                     b.HasIndex("CarManufacturerId");
 
@@ -130,15 +127,15 @@ namespace CarImport.Domain.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ModifierUser")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PersonalNumber")
+                    b.Property<int>("PersonalNumber")
+                        .HasMaxLength(11)
+                        .HasColumnType("int");
+
+                    b.Property<string>("RegisterByUser")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -175,7 +172,7 @@ namespace CarImport.Domain.Migrations
                     b.Property<DateTime>("LastModifyDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("ModifierUser")
+                    b.Property<string>("RegisterByUser")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -183,6 +180,8 @@ namespace CarImport.Domain.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CarId");
 
                     b.HasIndex("CustomerId");
 
@@ -260,15 +259,7 @@ namespace CarImport.Domain.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CarImport.Domain.DbEntities.Order", "Order")
-                        .WithOne("Car")
-                        .HasForeignKey("CarImport.Domain.DbEntities.Car", "OrderId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.Navigation("CarModel");
-
-                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("CarImport.Domain.DbEntities.CarModel", b =>
@@ -284,11 +275,19 @@ namespace CarImport.Domain.Migrations
 
             modelBuilder.Entity("CarImport.Domain.DbEntities.Order", b =>
                 {
+                    b.HasOne("CarImport.Domain.DbEntities.Car", "Car")
+                        .WithMany()
+                        .HasForeignKey("CarId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("CarImport.Domain.DbEntities.Customer", "Customer")
                         .WithMany("Orders")
                         .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Car");
 
                     b.Navigation("Customer");
                 });
@@ -321,12 +320,6 @@ namespace CarImport.Domain.Migrations
             modelBuilder.Entity("CarImport.Domain.DbEntities.Customer", b =>
                 {
                     b.Navigation("Orders");
-                });
-
-            modelBuilder.Entity("CarImport.Domain.DbEntities.Order", b =>
-                {
-                    b.Navigation("Car")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

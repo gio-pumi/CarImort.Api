@@ -1,3 +1,4 @@
+using CarImport.Core;
 using CarImport.Core.Interfaces;
 using CarImport.Core.Services;
 using CarImport.Domain;
@@ -38,12 +39,12 @@ namespace CarImort.Api
             });
 
 
-            //  builder.Services.AddAutoMapper();
+            builder.Services.AddAutoMapper(config => config.AddProfile<MappingProfile>());
             builder.Services.AddScoped<ICustomerService, CustomerService>();
             builder.Services.AddScoped<IOrderService, OrderService>();
             builder.Services.AddScoped<IAuthorizeService, AuthorizeService>();
             builder.Services.AddScoped<ISearchCustomerService, SearchCustomerService>();
-
+            builder.Services.AddHttpContextAccessor();
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             options.TokenValidationParameters = new TokenValidationParameters
@@ -74,7 +75,7 @@ namespace CarImort.Api
 
 
             app.MapControllers();
-
+            
             app.Run();
         }
     }
