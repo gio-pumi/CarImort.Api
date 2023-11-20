@@ -2,7 +2,6 @@
 using CarImport.Core.Models;
 using CarImport.Core.Models.User;
 using CarImport.Domain.DbEntities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarImort.Api.Controllers
@@ -13,7 +12,6 @@ namespace CarImort.Api.Controllers
     public class AuthorizeController : ControllerBase
     {
         private readonly IAuthorizeService _authorizeService;
-        private readonly IHttpContextAccessor _contextAccessor;
 
         public AuthorizeController(IAuthorizeService authorizeService)
         {

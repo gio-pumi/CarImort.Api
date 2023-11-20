@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CarImport.Core.Models.Search
+﻿namespace CarImport.Core.Models.Search
 {
     public  class SearchCustomerDTO 
     {

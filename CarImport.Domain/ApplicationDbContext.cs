@@ -1,10 +1,5 @@
 ﻿using CarImport.Domain.DbEntities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CarImport.Domain
 {
@@ -23,6 +18,8 @@ namespace CarImport.Domain
         public DbSet<Car> Cars { get; set; }
         public DbSet<CarManufacturer> CarManufacturers { get; set; }
         public DbSet<CarModel> CarModels { get; set; }
+
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

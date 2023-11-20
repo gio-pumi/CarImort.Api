@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CarImport.Domain.DbEntities
+﻿namespace CarImport.Domain.DbEntities
 {
     public class User
     {
@@ -14,7 +8,6 @@ namespace CarImport.Domain.DbEntities
         public byte[] PasswordSalt { get; set; }
         public string? RefreshToken { get; set; }
         public DateTime? RefreshExpirationDate { get; set; }
-
         public List<Role> Roles { get; set; } 
     }
 }

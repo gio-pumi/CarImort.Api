@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
+using CarImport.Core.Models.Car;
+using CarImport.Core.Models.CarManufacturer;
 using CarImport.Core.Models.Customer;
+using CarImport.Core.Models.Order;
 using CarImport.Domain.DbEntities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CarImport.Core
 {
@@ -13,7 +11,13 @@ namespace CarImport.Core
     {
         public MappingProfile()
         {
-            CreateMap<Customer,CustomerDTO>().ReverseMap();
+            CreateMap<Customer, CustomerDTO>().ReverseMap();
+            CreateMap<Car, CarDTO>().ReverseMap();
+            CreateMap<Car, CarUpdateDTO>().ReverseMap();
+            CreateMap<CarManufacturer, CarManufacturerDTO>().ReverseMap();
+            CreateMap<CarManufacturer, CarManufacturerUpdateDTO>().ReverseMap();
+            CreateMap<Customer, CustomerDTO>().ReverseMap();
+            CreateMap<Order,OrderDTO>().ReverseMap();
         }
     }
 }

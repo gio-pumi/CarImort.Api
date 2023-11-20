@@ -1,12 +1,6 @@
 ﻿using CarImport.Infrastructure.Enumerations;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CarImport.Domain.DbEntities
 {
@@ -25,7 +19,7 @@ namespace CarImport.Domain.DbEntities
 
         public decimal CarCost { get; set; }
 
-        public Currencies Currecy { get; set; }
+        public Currencies Currenecies { get; set; }
 
         public string ImageUrl{ get; set; }
 

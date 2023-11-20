@@ -1,6 +1,4 @@
-﻿using CarImport.Domain.DbEntities;
-using CarImport.Infrastructure.Enumerations;
-using CarImport.Infrastructure.Helper;
+﻿using CarImport.Infrastructure.Helper;
 
 namespace CarImport.Core.Models.Order
 {

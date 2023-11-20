@@ -1,8 +1,11 @@
 using CarImort.Api.Controllers;
 using CarImport.Core;
 using CarImport.Core.Interfaces;
+using CarImport.Core.Repository;
+using CarImport.Core.Repository_Interfaces;
 using CarImport.Core.Services;
 using CarImport.Domain;
+using CarImport.Domain.DbEntities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -39,14 +42,19 @@ namespace CarImort.Api
 
             });
 
-
             builder.Services.AddAutoMapper(config => config.AddProfile<MappingProfile>());
             builder.Services.AddScoped<ICustomerService, CustomerService>();
             builder.Services.AddScoped<IOrderService, OrderService>();
             builder.Services.AddScoped<IAuthorizeService, AuthorizeService>();
             builder.Services.AddScoped<ISearchCustomerService, SearchCustomerService>();
+            builder.Services.AddScoped<ICarManufacturerService, CarManufacturerService>();
+            builder.Services.AddScoped<ICarService, CarService>();
+            builder.Services.AddScoped<ICarRepository<Car>, CarRepository<Car>>();
+            builder.Services.AddScoped<IOrderRepository<Order>, OrderRepository<Order>>();
+            builder.Services.AddScoped<ICustomerRepository<Customer>, CustomerRepository<Customer>>();
+            builder.Services.AddScoped<ICarManufaturerRepository<CarManufacturer>, CarManufacurerRepository<CarManufacturer>>();
+            builder.Services.AddScoped<ICurrencyService, CurrencyService>();
             builder.Services.AddHttpContextAccessor();
-            builder.Services.AddScoped<GetCurrenciesController>();
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             options.TokenValidationParameters = new TokenValidationParameters

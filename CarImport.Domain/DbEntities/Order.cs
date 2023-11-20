@@ -1,6 +1,4 @@
-﻿using CarImport.Infrastructure.Enumerations;
-using CarImport.Infrastructure.Helper;
-using System.Collections.Generic;
+﻿using CarImport.Infrastructure.Helper;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CarImport.Domain.DbEntities

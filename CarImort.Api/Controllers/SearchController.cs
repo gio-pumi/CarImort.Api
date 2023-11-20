@@ -1,8 +1,6 @@
 ﻿using CarImport.Core.Interfaces;
 using CarImport.Core.Models.Search;
-using CarImport.Core.Services;
 using CarImport.Domain.DbEntities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarImort.Api.Controllers
@@ -17,7 +15,6 @@ namespace CarImort.Api.Controllers
         {
             _searchCustomerService = searchCustomerService;
         }
-
 
         [HttpPost]
         [Route("")]

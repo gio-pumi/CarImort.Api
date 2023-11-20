@@ -33,7 +33,7 @@ namespace CarImport.Domain.Migrations
                     b.Property<decimal>("CarCost")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("Currecy")
+                    b.Property<int>("Currenecies")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DateOfManufacruring")
@@ -125,9 +125,10 @@ namespace CarImport.Domain.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PersonalNumber")
+                    b.Property<string>("PersonalNumber")
+                        .IsRequired()
                         .HasMaxLength(11)
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(11)");
 
                     b.Property<string>("RegisterByUser")
                         .IsRequired()
